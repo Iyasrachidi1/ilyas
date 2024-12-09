@@ -1,4 +1,6 @@
 geopandas
+gdal
 folium
 streamlit
+requests
 streamlit-folium
