@@ -1,6 +1,6 @@
-gdal==3.10.0
-geopandas
+gdal==3.2.2
 folium
 streamlit
+geopandas
 requests
 streamlit-folium
