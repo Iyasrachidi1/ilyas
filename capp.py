@@ -2,14 +2,19 @@ import geopandas as gpd
 import folium
 import streamlit as st
 from streamlit_folium import folium_static
+import requests
 from io import BytesIO
 
-# Streamlit file uploader
-uploaded_file = st.file_uploader("Choisir un fichier GPKG", type="gpkg")
+# URL to the GPKG file on GitHub
+gpkg_url = "https://github.com/Iyasrachidi1/ilyas/raw/master/donnes.gpkg"
 
-if uploaded_file is not None:
-    # Lire le fichier GPKG téléchargé
-    gdf = gpd.read_file(uploaded_file)
+# Télécharger le fichier GPKG depuis GitHub
+response = requests.get(gpkg_url)
+
+# Vérifier si la requête a réussi
+if response.status_code == 200:
+    # Lire le fichier GPKG téléchargé dans un GeoDataFrame
+    gdf = gpd.read_file(BytesIO(response.content))
 
     # Filtrer uniquement les géométries de type Polygon ou MultiPolygon
     gdf = gdf[gdf['geometry'].apply(lambda x: x.geom_type in ['Polygon', 'MultiPolygon'])]
@@ -69,3 +74,6 @@ if uploaded_file is not None:
 
     # Afficher la carte dans Streamlit
     folium_static(m)
+
+else:
+    st.error("Erreur lors du téléchargement du fichier GPKG.")
