@@ -1,4 +1,4 @@
-gdal
+gdal==3.10.0
 folium
 streamlit
 geopandas
