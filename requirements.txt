@@ -1,9 +1,6 @@
+gdal==3.10.0
 geopandas
 folium
 streamlit
 requests
 streamlit-folium
-gdal-bin
-libgdal-dev
-
-
