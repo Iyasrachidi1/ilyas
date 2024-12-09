@@ -14,7 +14,7 @@ response = requests.get(url)
 # Vérifier si le téléchargement est réussi
 if response.status_code == 200:
     # Charger le fichier GPKG dans GeoPandas
-    gdf = gpd.read_file(BytesIO(response.content))
+    gdf = gpd.read_file(BytesIO(response.content), engine="gdal")
     
     # Filtrer uniquement les géométries de type Polygon ou MultiPolygon
     gdf = gdf[gdf['geometry'].apply(lambda x: x.geom_type in ['Polygon', 'MultiPolygon'])]
