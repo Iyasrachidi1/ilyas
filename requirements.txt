@@ -1,6 +1,9 @@
 geopandas
-gdal
 folium
 streamlit
 requests
 streamlit-folium
+gdal-bin
+libgdal-dev
+
+
