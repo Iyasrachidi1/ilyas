@@ -1,0 +1,198 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #f8f9fa; /* Couleur de fond claire */
+  color: #343a40; /* Texte sombre */
+}
+
+#map {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Personnalisation du zoom */
+.leaflet-control-zoom {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2000;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
+
+.leaflet-control-zoom a {
+  background-color: #212529; /* Fond sombre */
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #e74c3c; /* Rouge au survol */
+  transform: scale(1.1); /* Effet d'agrandissement au survol */
+}
+
+/* Style des contrôles personnalisés */
+.controls {
+  position: absolute;
+  top: 20px;
+  left: 80px;
+  z-index: 1000;
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  max-width: 350px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.controls.hidden {
+  opacity: 0;
+  transform: translateX(-350px);
+}
+
+/* Bouton de bascule pour afficher/masquer les contrôles */
+.toggle-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+  background-color: #212529;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Effet de survol du bouton */
+.toggle-button:hover {
+  background-color: #e74c3c; /* Rouge au survol */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Ombre plus forte */
+  transform: scale(1.1); /* Agrandissement au survol */
+}
+
+.toggle-button:active {
+  transform: scale(0.95); /* Réduction lors du clic */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre réduite */
+}
+
+/* Style des éléments dans les contrôles */
+.controls .control-item {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #495057;
+}
+
+.controls .control-item input,
+.controls .control-item select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls .control-item input:focus,
+.controls .control-item select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Effet de focus avec ombre */
+}
+#apply-filters {
+background-color: #212529; /* Bleu primaire */
+color: white;
+font-size: 16px;
+padding: 12px 24px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre légère */
+transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+width: 100%;
+text-align: center;
+}
+
+/* Effet au survol */
+#apply-filters:hover {
+  background-color: #e74c3c; /* Bleu plus foncé */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Ombre plus marquée */
+  transform: translateY(-4px); /* Légère élévation */
+}
+
+/* Effet au clic */
+#apply-filters:active {
+  background-color: #00ff15; /* Encore plus foncé au clic */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre réduite au clic */
+  transform: translateY(0); /* Retour à la position d'origine */
+}
+
+/* Style de l'élément parent pour bien aligner le bouton */
+.control-item {
+  margin-bottom: 20px;
+}
+/* Conteneur des sélecteurs de couleurs */
+#filters div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Style des labels */
+#filters label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+/* Style des inputs de couleur */
+#filters input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Effet au survol */
+#filters input[type="color"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+#output {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
