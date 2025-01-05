@@ -1,4 +1,7 @@
 Flask
 Flask-Cors
-pandas
 geopandas
+pandas
+shapely
+numpy
+gunicorn
