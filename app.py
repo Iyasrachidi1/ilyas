@@ -7,6 +7,9 @@ import os
 import requests
 
 app = Flask(__name__)
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))  # Utilise 5000 si la variable d'environnement PORT n'est pas définie
+    app.run(host='0.0.0.0', port=port, debug=True)
 CORS(app)
 
 
