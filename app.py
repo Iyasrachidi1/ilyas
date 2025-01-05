@@ -13,11 +13,11 @@ if __name__ == '__main__':
 CORS(app)
 
 
-# URL brute du fichier sur GitHub
+# URL brute du fichier GeoPackage sur GitHub
 GPKG_URL = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
 LOCAL_GPKG_FILE = "donnes.gpkg"
 
-# Télécharger le fichier s'il n'existe pas localement
+# Télécharger le fichier si il n'existe pas localement
 if not os.path.exists(LOCAL_GPKG_FILE):
     print("🔄 Téléchargement du fichier GeoPackage...")
     response = requests.get(GPKG_URL)
@@ -31,7 +31,6 @@ if not os.path.exists(LOCAL_GPKG_FILE):
 # Charger le fichier GeoPackage
 try:
     gdf = gpd.read_file(LOCAL_GPKG_FILE, driver='GPKG')
-
     print("✅ Fichier GeoPackage chargé avec succès.")
 except Exception as e:
     raise Exception(f"❌ Erreur lors du chargement du fichier GeoPackage: {e}")
