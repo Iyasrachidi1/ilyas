@@ -10,19 +10,9 @@ app = Flask(__name__)
 CORS(app)
 
 # URL brute du fichier sur GitHub
-GPKG_URL = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
-LOCAL_GPKG_FILE = "donnes.gpkg"
+LOCAL_GPKG_FILE = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
 
-# Télécharger le fichier s'il n'existe pas localement
-if not os.path.exists(LOCAL_GPKG_FILE):
-    print("🔄 Téléchargement du fichier GeoPackage...")
-    response = requests.get(GPKG_URL)
-    if response.status_code == 200:
-        with open(LOCAL_GPKG_FILE, 'wb') as f:
-            f.write(response.content)
-        print("✅ Fichier GeoPackage téléchargé avec succès.")
-    else:
-        raise Exception(f"❌ Erreur lors du téléchargement du fichier: {response.status_code}")
+
 
 # Charger le fichier GeoPackage
 try:
