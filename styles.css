@@ -196,6 +196,11 @@ text-align: center;
 .error-message {
     color: red;
 }
+#num-elements {
+  color: red;  /* Applique la couleur rouge */
+  font-weight: bold;  /* Met le texte en gras */
+}
+
 
 
 
