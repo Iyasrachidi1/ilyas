@@ -1,4 +1,4 @@
-Flask==2.2.2
-Flask-Cors==2.1.1
+Flask
+Flask-Cors
 pandas
 geopandas
