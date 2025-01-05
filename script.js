@@ -150,6 +150,8 @@ function applyFilters() {
 
     vectorLayer.addTo(map);
 }
+// Afficher le message "En cours de comptage des éléments filtrés"
+document.getElementById("num-elements").textContent = "En cours de comptage des éléments filtrés...";
 
 // Ajout d'écouteurs pour le bouton d'application des filtres
 document.getElementById("apply-filters").addEventListener("click", applyFilters);
