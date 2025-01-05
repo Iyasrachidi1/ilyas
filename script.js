@@ -57,7 +57,7 @@ function applyFilters() {
 
 
     
-    fetch(`http://localhost:5000/get_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`)
+    fetch(`https://ilyas-v5h9.onrender.com/get_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`)
     .then(response => {
         if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
