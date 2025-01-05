@@ -6,3 +6,4 @@ shapely
 numpy
 gunicorn
 requests
+gdal
