@@ -6,4 +6,5 @@ shapely
 numpy
 gunicorn
 requests
-gdal
+gdal==3.10.0
+
