@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Chemin vers le fichier GeoPackage
-gpkg_file = "donnes.gpkg"
+gpkg_file = "https://github.com/Iyasrachidi1/ilyas/blob/master/donnes.gpkg"
 
 # Charger le fichier GeoPackage
 gdf = gpd.read_file(gpkg_file)
