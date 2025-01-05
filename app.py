@@ -5,22 +5,32 @@ import pandas as pd
 import re
 import os
 import requests
-from osgeo import gdal  
 
 app = Flask(__name__)
 CORS(app)
 
 
-# URL du fichier GeoPackage
-url = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
+# URL brute du fichier sur GitHub
+GPKG_URL = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
+LOCAL_GPKG_FILE = "donnes.gpkg"
 
-# Essayer de charger le fichier GeoPackage via l'URL
+# Télécharger le fichier s'il n'existe pas localement
+if not os.path.exists(LOCAL_GPKG_FILE):
+    print("🔄 Téléchargement du fichier GeoPackage...")
+    response = requests.get(GPKG_URL)
+    if response.status_code == 200:
+        with open(LOCAL_GPKG_FILE, 'wb') as f:
+            f.write(response.content)
+        print("✅ Fichier GeoPackage téléchargé avec succès.")
+    else:
+        raise Exception(f"❌ Erreur lors du téléchargement du fichier: {response.status_code}")
+
+# Charger le fichier GeoPackage
 try:
-    gdf = gpd.read_file(f"GDAL:{url}")
-    print("Le fichier a été chargé avec succès !")
+    gdf = gpd.read_file(LOCAL_GPKG_FILE)
+    print("✅ Fichier GeoPackage chargé avec succès.")
 except Exception as e:
-    print(f"Erreur lors de l'ouverture du fichier : {e}")
-
+    raise Exception(f"❌ Erreur lors du chargement du fichier GeoPackage: {e}")
 
 
 
