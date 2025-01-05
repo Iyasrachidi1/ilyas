@@ -5,21 +5,23 @@ import pandas as pd
 import re
 import os
 import requests
+from osgeo import ogr
 
 app = Flask(__name__)
 CORS(app)
 
-# URL brute du fichier sur GitHub
-LOCAL_GPKG_FILE = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
+# Utiliser GDAL pour lire un fichier GeoPackage à partir de l'URL
+url = "https://raw.githubusercontent.com/Iyasrachidi1/ilyas/master/donnes.gpkg"
+gdf = ogr.Open(f"VSICURL:{url}")
+
+# Assurer que le dataset est ouvert
+if dataset:
+    print("Le fichier a été chargé avec succès !")
+else:
+    print("Erreur lors de l'ouverture du fichier.")
 
 
 
-# Charger le fichier GeoPackage
-try:
-    gdf = gpd.read_file(LOCAL_GPKG_FILE)
-    print("✅ Fichier GeoPackage chargé avec succès.")
-except Exception as e:
-    raise Exception(f"❌ Erreur lors du chargement du fichier GeoPackage: {e}")
 
 @app.route('/get_filtered_data', methods=['GET'])
 def get_filtered_data():
