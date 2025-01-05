@@ -1,8 +1,0 @@
-Flask
-Flask-Cors
-geopandas
-pandas
-shapely
-numpy
-gunicorn
-requests
