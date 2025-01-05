@@ -42,7 +42,9 @@ function applyFilters() {
     if (vectorLayer) {
     map.removeLayer(vectorLayer);
     }
-
+    // Afficher le message "En cours de comptage des éléments filtrés" en rouge
+    document.getElementById("num-elements").textContent = "En cours de comptage des éléments filtrés...";
+    document.getElementById("num-elements").classList.add('error-message'); // Applique la classe 'error-message'
     var usageType = document.getElementById("usage-filter").value;
     var minHeight = parseFloat(document.getElementById("min-height").value) || 0;
     var maxHeight = parseFloat(document.getElementById("max-height").value) || Infinity;
@@ -150,9 +152,7 @@ function applyFilters() {
 
     vectorLayer.addTo(map);
 }
-// Afficher le message "En cours de comptage des éléments filtrés" en rouge
-document.getElementById("num-elements").textContent = "En cours de comptage des éléments filtrés...";
-document.getElementById("num-elements").classList.add('error-message'); // Applique la classe 'error-message'
+
 
 
 // Ajout d'écouteurs pour le bouton d'application des filtres
