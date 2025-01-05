@@ -30,7 +30,8 @@ if not os.path.exists(LOCAL_GPKG_FILE):
 
 # Charger le fichier GeoPackage
 try:
-    gdf = gpd.read_file(LOCAL_GPKG_FILE)
+    gdf = gpd.read_file(LOCAL_GPKG_FILE, driver='GPKG')
+
     print("✅ Fichier GeoPackage chargé avec succès.")
 except Exception as e:
     raise Exception(f"❌ Erreur lors du chargement du fichier GeoPackage: {e}")
