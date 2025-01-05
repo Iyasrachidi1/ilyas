@@ -44,7 +44,6 @@ function applyFilters() {
     }
     // Afficher le message "En cours de comptage des éléments filtrés" en rouge
     document.getElementById("num-elements").textContent = "En cours de comptage des éléments filtrés...";
-    document.getElementById("num-elements").classList.add('error-message'); // Applique la classe 'error-message'
     var usageType = document.getElementById("usage-filter").value;
     var minHeight = parseFloat(document.getElementById("min-height").value) || 0;
     var maxHeight = parseFloat(document.getElementById("max-height").value) || Infinity;
