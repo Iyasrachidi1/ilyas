@@ -56,7 +56,7 @@ function applyFilters() {
     var filteredColor = document.getElementById("filtered-color").value;
     var unfilteredColor = document.getElementById("unfiltered-color").value;
     
-    fetch(`http://127.0.0.1:5000/get_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`)
+    fetch(`https://ilyasra1.pythonanywhere.com/get_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`)
     .then(response => {
         if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -171,7 +171,7 @@ document.getElementById('download-geojson').addEventListener('click', () => {
     const maxYear = parseInt(document.getElementById("max-year").value) || null; // Année maximale
 
     // Construire l'URL de l'API
-    const url = `http://127.0.0.1:5000/download_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`;
+    const url = `https://ilyasra1.pythonanywhere.com/download_filtered_data?categories=${encodeURIComponent(usageType)}&min_height=${minHeight}&max_height=${maxHeight}&min_surface=${minSurface}&isolation=${encodeURIComponent(isolationType)}&material=${encodeURIComponent(materialType)}&floor=${encodeURIComponent(floorType)}&min_year=${minYear}&max_year=${maxYear}`;
 
     // Envoyer une requête pour vérifier si le fichier est prêt (optionnel)
     fetch(url)
