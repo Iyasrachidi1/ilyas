@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Déclaration du jeu de caractères et des métadonnées -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtrage Interactif des Tuiles Vectorielles</title>
+  
+  <!-- Lien vers les styles externes : Leaflet, FontAwesome, et d'autres bibliothèques -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="styles.css"> <!-- Styles personnalisés -->
+  <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css">
+
+  <!-- Lien vers les bibliothèques JavaScript externes -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.js"></script>
+  <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Conteneur pour la carte -->
+  <div id="map"></div>
+
+  <!-- Bouton pour afficher/masquer les filtres -->
+  <button class="toggle-button" id="toggle-controls">
+    <i class="fas fa-bars"></i> <!-- Icône de menu -->
+  </button>
+
+  <!-- Zone de contrôle cachée par défaut, qui contient des filtres interactifs -->
+  <div class="controls hidden" id="filters">
+    <!-- Contrôles pour les couleurs et les filtres -->
+    <div>
+        <label for="filtered-color">Couleur des données filtrées :</label>
+        <input type="color" id="filtered-color" value="#ff0000">
+    </div>
+    <div>
+        <label for="unfiltered-color">Couleur des données non filtrées :</label>
+        <input type="color" id="unfiltered-color" value="#0000ff">
+    </div>
+    
+    <!-- Filtrage par type d'usage -->
+    <div class="control-item">
+        <label for="usage-filter">Type d'usage :</label>
+        <select id="usage-filter">
+            <option value="">Tous</option>
+            <option value="Résidentiel">Résidentiel</option>
+            <option value="Commercial et services">Commercial et services</option>
+            <option value="Industriel">Industriel</option>
+            <option value="Sportif">Sportif</option>
+            <option value="Religieux">Religieux</option>
+            <option value="Annexe">Annexe</option>
+            <option value="Agricole">Agricole</option>
+        </select>
+    </div>
+
+    <!-- Autres filtres pour la hauteur, surface, isolation, etc. -->
+    <div class="control-item">
+        <label for="min-height">Hauteur minimale :</label>
+        <input type="number" id="min-height" placeholder="Entrez la hauteur min">
+    </div>
+    <div class="control-item">
+        <label for="max-height">Hauteur maximale :</label>
+        <input type="number" id="max-height" placeholder="Entrez la hauteur max">
+    </div>
+    <div class="control-item">
+        <label for="surface-filter">Surface habitable (min):</label>
+        <input type="number" id="surface-filter" placeholder="Entrez la surface min">
+    </div>
+    <div class="control-item">
+        <label for="isolation-filter">Type d'isolation :</label>
+        <select id="isolation-filter">
+            <option value="">Tous</option>
+            <option value="non isole">Non isolé</option>
+            <option value="ITI">ITI</option>
+            <option value="inconnu">Inconnu</option>
+            <option value="ITI+ITR">ITI+ITR</option>
+            <option value="ITI+ITE">ITI+ITE</option>
+            <option value="ITR">ITR</option>
+            <option value="ITE">ITE</option>
+            <option value="isole">Isolé</option>
+            <option value="ITE+ITR">ITE+ITR</option>
+        </select>
+    </div>
+
+    <!-- Autres filtres (matériau, type de plancher, année de construction) -->
+    <div class="control-item">
+        <label for="material-filter">Matériau des murs :</label>
+        <select id="material-filter">
+            <option value="">Tous</option>
+            <option value="murs en pierre">Murs en pierre</option>
+            <option value="murs en briques">Murs en briques</option>
+            <option value="murs en béton">Murs en béton</option>
+            <option value="inconnu">Inconnu</option>
+            <option value="autre matériau non répertorié">Autre matériau</option>
+            <option value="murs en béton banché">Murs en béton banché</option>
+        </select>
+    </div>
+    <div class="control-item">
+        <label for="floor-filter">Type de plancher :</label>
+        <select id="floor-filter">
+            <option value="">Tous</option>
+            <option value="plancher entre solives bois">Plancher entre solives bois</option>
+            <option value="plancher entre solives métalliques">Plancher entre solives métalliques</option>
+            <option value="dalle béton">Dalle béton</option>
+            <option value="voutains en briques">Voutains en briques</option>
+            <option value="plancher bois sur solives bois">Plancher bois sur solives bois</option>
+        </select>
+    </div>
+
+    <!-- Filtres pour l'année de construction -->
+    <div class="control-item">
+        <label for="min-year">Année de construction minimale :</label>
+        <input type="number" id="min-year" placeholder="Entrez l'année min">
+    </div>
+    <div class="control-item">
+        <label for="max-year">Année de construction maximale :</label>
+        <input type="number" id="max-year" placeholder="Entrez l'année max">
+    </div>
+    
+    <!-- Boutons d'action -->
+    <div class="button-container">
+        <button id="apply-filters">Appliquer les filtres choisis</button>
+        <button id="download-geojson">Télécharger les données filtrées</button>
+        <button id="download-report">Télécharger le rapport PDF</button>
+    </div>
+
+    <!-- Affichage du nombre d'éléments filtrés -->
+    <div class="control-item">
+        <span id="num-elements">Nombre d'éléments filtrés : En cours de comptage des éléments filtrés...</span>
+    </div>
+  </div>
+
+  <!-- Script JavaScript personnalisé -->
+  <script src="script.js"></script>
+</body>
+</html>
